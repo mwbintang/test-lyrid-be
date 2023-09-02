@@ -34,13 +34,14 @@ class controller {
   }
   static async create(req, res, next) {
     try {
-      const { username, address, phone_number, password, email } = req.body;
+      const { username, address, phone_number, password, email, url_photo } = req.body;
       const data = await employee_management.create({
         username,
         address,
         phone_number,
         password,
         email,
+        url_photo
       });
       delete data.dataValues.password
       delete data.dataValues.createdAt
@@ -57,7 +58,7 @@ class controller {
       if (role != "employee_management" || idUser != id) {
         throw { name: "Unauthorized" };
       }
-      const { username, address, phone_number, password, email } = req.body;
+      const { username, address, phone_number, password, email, url_photo } = req.body;
       const employee_management_data = await employee_management.findByPk(id);
       if (!employee_management_data) {
         throw { name: "Data Not Found" };
@@ -69,6 +70,7 @@ class controller {
         phone_number,
         password,
         email,
+        url_photo
       });
       delete dataUpdated.dataValues.password
       delete dataUpdated.dataValues.createdAt

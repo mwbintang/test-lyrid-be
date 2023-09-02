@@ -10,7 +10,7 @@ class controller {
       const data = await user_management.findAndCountAll({
         limit,
         offset,
-        attributes: ["name", "note"],
+        attributes: { exclude: ["createdAt", "updatedAt", "password"] },
       });
       res.status(200).json(data);
     } catch (e) {
@@ -34,13 +34,14 @@ class controller {
   }
   static async create(req, res, next) {
     try {
-      const { username, address, phone_number, password, email } = req.body;
+      const { username, address, phone_number, password, email, url_photo } = req.body;
       const data = await user_management.create({
         username,
         address,
         phone_number,
         password,
         email,
+        url_photo
       });
       delete data.dataValues.password;
       delete data.dataValues.createdAt;
@@ -57,7 +58,7 @@ class controller {
       if (role == "employee_management" || idUser != id) {
         throw { name: "Unauthorized" };
       }
-      const { username, address, phone_number, password, email } = req.body;
+      const { username, address, phone_number, password, email, url_photo } = req.body;
       const user_management_data = await user_management.findByPk(id);
       if (!user_management_data) {
         throw { name: "Data Not Found" };
@@ -69,6 +70,7 @@ class controller {
         phone_number,
         password,
         email,
+        url_photo
       });
       delete dataUpdated.dataValues.password;
       delete dataUpdated.dataValues.createdAt;

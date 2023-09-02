@@ -7,5 +7,7 @@ const controller = require('../controllers/login')
 router.use("/employeeManagement", employeeManagement);
 router.use("/userManagement", userManagement);
 router.post('/login', controller.login)
+router.post('/upload', controller.upload);
+router.get('/image/:filename', controller.getImage)
 
 module.exports = router;
