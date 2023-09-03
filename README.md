@@ -10,6 +10,8 @@
 
 5. sequelize db:seed
 
-5. npm run start
+6. npm i nodemon -g
 
-6. use admin@email.com as email and Admin1234 as password to get jwt
+7. npm run start
+
+8. use admin@email.com as email and Admin1234 as password to get jwt
