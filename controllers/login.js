@@ -6,11 +6,11 @@ const path = require("path");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '../public/upload/')); // Use path.join to resolve the correct directory
+    cb(null, path.join(__dirname, "../public/upload/")); // Use path.join to resolve the correct directory
   },
   filename: (req, file, cb) => {
     const newFile =
-      file.fieldname + '-' + Date.now() + path.extname(file.originalname);
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname);
     cb(null, newFile);
   },
 });
@@ -18,8 +18,8 @@ const storage = multer.diskStorage({
 // Create multer middleware instance
 const uploadImage = multer({
   storage: storage,
-  limits: { fileSize: 300000 }
-}).single('img');
+  limits: { fileSize: 300000 },
+}).single("img");
 class controller {
   static async login(req, res, next) {
     try {
@@ -44,7 +44,7 @@ class controller {
         id: emailSearch.id,
         role,
       });
-      res.status(200).json({ access_token });
+      res.status(200).json({ access_token, role, id: emailSearch.id });
     } catch (error) {
       console.log(error);
       next(error);
@@ -54,13 +54,13 @@ class controller {
     uploadImage(req, res, (err) => {
       if (err) {
         // Handle the error (e.g., file size exceeds limit or wrong file type)
-        return res.status(400).json({ error: 'File upload error' });
+        return res.status(400).json({ error: "File upload error" });
       }
       // The file has been uploaded successfully
-      console.log('File uploaded:', req.file);
-  
+      console.log("File uploaded:", req.file);
+
       // Handle further processing here
-  
+
       // Send a response
       res.status(200).json(req.file);
     });
